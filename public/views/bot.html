@@ -4,18 +4,18 @@
 
 <section class="content">
   <p class="paragraph">
-    <label class="control-label">Bot name:</label> 
+    <label class="control-label">Bot name:</label>
     <input ng-model="bot.name" class="form-control short" />
     <span class="input-description">
       The nickname that the bot will be addressable by.
     </span>
   </p>
   <div class="paragraph">
-    <label class="control-label">Channels:</label> 
+    <label class="control-label">Channels:</label>
     
     <ul class="single-list">
       <li ng-repeat="chan in bot.channels" class="hollow-badge hollow-badge-green">
-        {{chan}} 
+        {{chan}}
         <a href ng-click="remove_channel(chan, $index)" class="close-button">&times;</a>
       </li>
       <a href ng-click="add_channel()" class="hollow-badge hollow-badge-blue">&plus; <!-- Add another --></a>
@@ -30,9 +30,10 @@
 
 
   <div class="topPad paragraph">
-    <label class="control-label">Chat type:</label> 
+    <label class="control-label">Chat type:</label>
     <select class="form-control very-short" ng-model="bot.adapter">
       <option value="slack">Slack</option>
+      <option value="hipchat">HipChat</option>
       <option value="irc">IRC</option>
     </select>
   </div>
@@ -58,6 +59,30 @@
     <input ng-model="bot.slack.api_token" class="form-control short" />
     <span class="input-description">
       Can be created <a href="https://api.slack.com/#auth">here.</a> Used to send private messages.
+    </span>
+  </p>
+</section>
+
+<div class="section-header" ng-show="bot.adapter == 'hipchat'">
+<h1>HipChat settings</h1>
+</div>
+
+
+<section class="content" ng-show="bot.adapter == 'hipchat'">
+  <p class="paragraph">
+    <label class="control-label">Webhook token:</label>
+    <input ng-model="bot.hipchat.webhook_token" class="form-control short" />
+    <span class="input-description">
+      Outgoing webhook integration token used to check if queries really come from Hipchat. If you're logged into hipchat, you can add one <a href="https://slack.com/services">here</a>.
+      <br />
+      On creation, set channels to <span class="highlight">any</span>, trigger word(s) to <span class="highlight">{{ bot.name }}</span> and URL(s) to <span class="highlight">{{ thisdomain }}</span>.
+    </span>
+  </p>
+  <p class="paragraph">
+    <label class="control-label">API token:</label>
+    <input ng-model="bot.hipchat.api_token" class="form-control short" />
+    <span class="input-description">
+      Can be created <a href="hipchat.com/account/api">here.</a> Used to send private messages.
     </span>
   </p>
 </section>
@@ -93,11 +118,11 @@
 </section>
 
 <div class="continue-bar">
-  <a href ng-click="goTo('/')" 
+  <a href ng-click="goTo('/')"
     class="btn btn-primary">
     Back
   </a>
-  <a href ng-click="goTo('/plugin-setup')" 
+  <a href ng-click="goTo('/plugin-setup')"
     class="btn btn-primary pull-right">
     Continue
   </a>

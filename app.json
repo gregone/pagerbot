@@ -11,6 +11,7 @@
         "bot",
         "irc",
         "slack",
+        "hipchat",
         "ruby"
     ],
     "addons": [
